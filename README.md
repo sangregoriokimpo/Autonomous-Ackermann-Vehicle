@@ -1,6 +1,6 @@
 # Autonomous Ackermann Geometry Vehicle
 
-![alt text](<lidarackermann.png>)
+![alt text](lidarackermann.png)
 
 <video src="testrunfull.mp4" controls width="600"></video>
 
