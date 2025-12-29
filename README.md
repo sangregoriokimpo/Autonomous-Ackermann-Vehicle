@@ -6,7 +6,7 @@
 
 ROS2 Humble Ackermann vehicle implementation based off of default gazebo plugins. Includes a LIDAR sensor for autonomous driving.
 
-Credit to @Hisham178 for the basic Ackermann geometry vehicle
+Credit to [@Hisham178](https://github.com/Hisham178) for the basic [Ackermann geometry vehicle](https://github.com/Hisham178/ros2_ackermann).
 
 How to install.
 1. Git clone and colcon.
