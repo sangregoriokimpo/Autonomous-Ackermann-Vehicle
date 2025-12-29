@@ -1,8 +1,37 @@
 <?xml version="1.0"?>
 <!-- URDF of Robot Simulation -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="bot_ackermann">
+
+    <material name="Gray">
+    <color rgba="0.5 0.5 0.5 1.0"/>
+    </material>
+
+    <material name="DarkGray">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+    </material>
+
     <!-- Physical Description -->
     <xacro:include filename="bot_base.xacro" />
     <!-- Simulation -->
     <xacro:include filename="gz_ackermann_core.xacro" />
+
+    <!-- lidar -->
+    <!-- <xacro:include filename="lidar_sensor.xacro" />
+
+    <xacro:lidar_sensor
+    parent_link="base_link"
+    lidar_name="top_lidar"
+    lidar_xyz="0 0 0.5"
+    lidar_rpy="0 0 0"/> -->
+
+    <!-- 3D lidar -->
+    <xacro:include filename="lidar_3d.xacro"/>
+
+    <xacro:lidar_3d
+        parent_link="base_link"
+        lidar_name="top_3d_lidar"
+        xyz="0 0 0.3"
+        rpy="0 0 0"/>
+
+
 </robot>

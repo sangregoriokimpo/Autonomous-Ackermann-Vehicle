@@ -57,9 +57,16 @@ def generate_launch_description():
         name="urdf_spawner",
         package="gazebo_ros",
         executable="spawn_entity.py",
-        arguments=["-topic", "robot_description", "-entity", "bot_ackermann"],
+        arguments=[
+            "-topic", "robot_description",
+            "-entity", "bot_ackermann",
+            "-x", "0.0",
+            "-y", "6.0",
+            "-z", "0.0"
+        ],
         output="screen",
     )
+
 
     return LaunchDescription(
         [
