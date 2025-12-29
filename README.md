@@ -2,7 +2,8 @@
 
 ![alt text](<lidarackermann.png>)
 
-![alt text](testrunfull.mp4)
+![Demo Video](<video src="testrunfull.mp4" controls width="600"></video>
+)
 
 ROS2 Humble Ackermann vehicle implementation based off of default gazebo plugins. Includes a LIDAR sensor for autonomous driving.
 
