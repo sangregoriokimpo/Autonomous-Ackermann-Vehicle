@@ -19,6 +19,6 @@ How to install.
 # To launch multi vehicle mode
 ```ros2 launch multirobot.launch.py```
 or
-```ros2 laaunch multifusion.launch.py```
+```ros2 launch multifusion.launch.py```
 
 
