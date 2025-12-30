@@ -17,7 +17,7 @@
                  v_min:=-0.1308995
                  v_max:=0.261799
                  range_min:=0.1
-                 range_max:=10.0
+                 range_max:=50.0
                  update_rate:=10">
 
     <!-- LiDAR link -->
@@ -54,7 +54,7 @@
     <gazebo reference="${lidar_name}_link">
       <sensor type="ray" name="${lidar_name}">
         <pose>0 0 0 0 0 0</pose>
-        <visualize>true</visualize>
+        <visualize>false</visualize>
         <update_rate>${update_rate}</update_rate>
 
         <ray>

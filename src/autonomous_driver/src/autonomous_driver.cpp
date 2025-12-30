@@ -14,11 +14,11 @@ public:
     {
         RCLCPP_INFO(this->get_logger(), "AutonomousDriver node CONSTRUCTOR running");
         
-        cmd_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
+        cmd_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
         auto sensor_qos = rclcpp::QoS(rclcpp::SensorDataQoS());
 
         lidar_sub_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-            "/top_3d_lidar_plugin/out",
+            "top_3d_lidar_plugin/out",
             sensor_qos,
             std::bind(&AutonomousDriver::lidarCallback, this, std::placeholders::_1));
     }
@@ -33,7 +33,7 @@ private:
         const double self_radius_sq   = self_radius * self_radius;
 
         const double min_forward      = 0.5;   // start looking this far ahead (m)
-        const double max_forward      = 5.0;   // up to this far ahead (m)
+        const double max_forward      = 15.0;   // up to this far ahead (m)
         const double max_side         = 5.0;   // ignore points farther than this sideways
         const double max_range        = 50.0;  // large number for "no reading"
 
@@ -62,7 +62,7 @@ private:
             //
             //    if (x > -min_forward || x < -max_forward) continue;
             //
-            if (x < min_forward || x > max_forward) {
+            if (x > -min_forward || x < -max_forward) {
                 continue;
             }
 
@@ -108,9 +108,9 @@ private:
 
         // Base speed, slow down if very close to walls
         double closest = std::min(left_min, right_min);
-        double speed   = 100.0;          // m/s, tune as needed
+        double speed   = 12.0;          // m/s, tune as needed
 
-        if (closest < 1.0) speed = 0.5;
+        if (closest < 1.0) speed = 6.0;
         if (closest < 0.5) speed = 0.0;  // emergency stop
 
         geometry_msgs::msg::Twist cmd;

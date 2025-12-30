@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--
+    Macro: rgbd_sensor
+    Parameters:
+      parent_link  : link to attach camera to (e.g. "chassis_link")
+      sensor_name  : base name (e.g. "front_rgbd")
+      x, y, z      : pose of the camera relative to parent_link
+      width,height : image resolution
+      fps          : frame rate
+      fov          : horizontal field of view (rad)
+      near,far     : depth range
+  -->
+  <xacro:macro name="rgbd_sensor"
+               params="parent_link sensor_name x y z width height fps fov near far">
+
+    <!-- Physical camera body -->
+    <link name="${sensor_name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.05 0.10 0.05"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.1 0.1 0.1 1.0"/>
+        </material>
+      </visual>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+      </inertial>
+    </link>
+
+    <!-- Optical frame (REP-103) -->
+    <link name="${sensor_name}_optical_frame">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1e-6"/>
+        <inertia ixx="1e-9" ixy="0" ixz="0" iyy="1e-9" iyz="0" izz="1e-9"/>
+      </inertial>
+    </link>
+
+    <!-- Mount camera body to parent -->
+    <joint name="${sensor_name}_joint" type="fixed">
+      <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+      <parent link="${parent_link}"/>
+      <child  link="${sensor_name}_link"/>
+    </joint>
+
+    <!-- Optical frame rotation (x right, y down, z forward) -->
+    <joint name="${sensor_name}_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+      <parent link="${sensor_name}_link"/>
+      <child  link="${sensor_name}_optical_frame"/>
+    </joint>
+
+    <!-- Gazebo sensor + ROS2 plugin -->
+    <gazebo reference="${sensor_name}_link">
+      <sensor type="depth" name="${sensor_name}_sensor">
+        <always_on>true</always_on>
+        <update_rate>${fps}</update_rate>
+        <visualize>true</visualize>
+
+        <camera name="${sensor_name}_camera">
+          <horizontal_fov>${fov}</horizontal_fov>
+          <image>
+            <width>${width}</width>
+            <height>${height}</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>${near}</near>
+            <far>${far}</far>
+          </clip>
+        </camera>
+
+        <!-- IMPORTANT: use ROS2 unified camera plugin -->
+        <plugin name="${sensor_name}_plugin" filename="libgazebo_ros_camera.so">
+          <!-- ROS 2 style parameters for gazebo_ros_camera -->
+          <camera_name>${sensor_name}</camera_name>
+          <frame_name>${sensor_name}_optical_frame</frame_name>
+
+          <!-- Depth limits used by the plugin as well -->
+          <min_depth>${near}</min_depth>
+          <max_depth>${far}</max_depth>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

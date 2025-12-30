@@ -33,5 +33,21 @@
         xyz="0 0 0.3"
         rpy="0 0 0"/>
 
+    <!-- RGBD  -->
+    <xacro:include filename="RGBD_sensor.xacro"/>
+
+
+    <xacro:rgbd_sensor
+        parent_link="chassis_link"
+        sensor_name="front_rgbd"
+        x="0.5" y="0.0" z="-0.05"
+        width="640" height="480"
+        fps="30.0"
+        fov="1.0472"
+        near="0.1" far="30.0"/>
+
+
+
+
 
 </robot>
