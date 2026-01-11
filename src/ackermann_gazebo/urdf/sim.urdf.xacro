@@ -21,7 +21,7 @@
     <xacro:lidar_sensor
     parent_link="base_link"
     lidar_name="top_lidar"
-    lidar_xyz="0 0 0.5"
+    lidar_xyz="0 0 0.25"
     lidar_rpy="0 0 0"/> -->
 
     <!-- 3D lidar -->
@@ -30,7 +30,7 @@
     <xacro:lidar_3d
         parent_link="base_link"
         lidar_name="top_3d_lidar"
-        xyz="0 0 0.3"
+        xyz="0 0 0.32"
         rpy="0 0 0"/>
 
     <!-- RGBD  -->
